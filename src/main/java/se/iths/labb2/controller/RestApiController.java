@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import se.iths.labb2.model.Game;
+import se.iths.labb2.service.GameService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
