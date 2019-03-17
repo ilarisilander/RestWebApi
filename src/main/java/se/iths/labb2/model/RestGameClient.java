@@ -38,7 +38,7 @@ public class RestGameClient {
 
     /* POST */
     private static void createGame() {
-        System.out.println("Testing create User API----------");
+        System.out.println("Testing create Game API----------");
         RestTemplate restTemplate = new RestTemplate();
         Game game = new Game(0,"Metroid",1986,"NES");
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI+"/game/", game, Game.class);
