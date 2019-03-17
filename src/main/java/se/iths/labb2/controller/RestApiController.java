@@ -47,7 +47,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/game/", method = RequestMethod.POST)
     public ResponseEntity<?> createGame(@RequestBody Game game, UriComponentsBuilder ucBuilder) {
-        logger.info("Creating Game : {}", game);
+        logger.info("Creating Game : {}", id);
 
         if(gameService.isGameExist(game)) {
             logger.error("Unable to create. A Game with name {} already exists", game.getName());
@@ -59,6 +59,44 @@ public class RestApiController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/api/game/{id}").buildAndExpand(game.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
+    //PUT (Update) A Game
+
+    @RequestMapping(value = "/game/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateGame(@PathVariable("id") long id, @RequestBody Game game) {
+        logger.info("Updating Game with id {}", id);
+
+        Game currentGame = gameService.findById(id);
+
+        if (currentGame == null) {
+            logger.error("Unable to update. Game with id {} not found.", id);
+            return new ResponseEntity(new CustomErrorType("Unable to update. Game with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+
+        currentGame.setName(game.getName());
+        currentGame.setConsole(game.getConsole());
+        currentGame.setReleased(game.getReleased());
+
+        gameService.updateGame(currentGame);
+        return new ResponseEntity<Game>(currentGame, HttpStatus.OK);
+    }
+
+    //DELETE A Game
+
+    @RequestMapping(value = "/game/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteGame(@PathVariable("id") long id) {
+        logger.info("Fetching & Deleting Game with id {}", id);
+
+        Game game = gameService.findById(id);
+        if (game == null) {
+            logger.error("Unable to delete. Game with id {} not found.", id);
+            return new ResponseEntity(new CustomErrorType("Unable to delete. Game with id " + id + " not found."),
+                    HttpStatus.NOT_FOUND);
+        }
+        gameService.deleteGameById(id);
+        return new ResponseEntity<Game>(HttpStatus.NO_CONTENT);
     }
 
 }
