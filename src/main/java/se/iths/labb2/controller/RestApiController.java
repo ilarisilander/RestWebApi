@@ -36,7 +36,7 @@ public class RestApiController {
 
     //GET A Single Game
 
-    @RequestMapping(value = "/game/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/game/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getGame(@PathVariable("id") long id) {
         logger.info("Get Game with ID {}", id);
         Game game = gameService.findById(id);
