@@ -99,4 +99,14 @@ public class RestApiController {
         return new ResponseEntity<Game>(HttpStatus.NO_CONTENT);
     }
 
+    //DELETE All Games
+
+    @RequestMapping(value = "/game/", method = RequestMethod.DELETE)
+    public ResponseEntity<Game> deleteAllGames() {
+        logger.info("Deleting All Games");
+
+        gameService.deleteAllGames();
+        return new ResponseEntity<Game>(HttpStatus.NO_CONTENT);
+    }
+
 }
