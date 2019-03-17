@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import se.iths.labb2.model.Game;
 import se.iths.labb2.service.GameService;
+import se.iths.labb2.util.CustomErrorType;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class RestApiController {
 
     @RequestMapping(value = "/game/", method = RequestMethod.POST)
     public ResponseEntity<?> createGame(@RequestBody Game game, UriComponentsBuilder ucBuilder) {
-        logger.info("Creating Game : {}", id);
+        logger.info("Creating Game : {}", game);
 
         if(gameService.isGameExist(game)) {
             logger.error("Unable to create. A Game with name {} already exists", game.getName());
